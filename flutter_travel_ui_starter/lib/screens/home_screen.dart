@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_travel_ui_starter/widgets/destination_carousel.dart';
+import 'package:flutter_travel_ui_starter/widgets/hotel_carousel.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -12,6 +12,8 @@ class _HomeScreenState extends State<HomeScreen> {
   List<IconData> _icons = [FontAwesomeIcons.plane, FontAwesomeIcons.bed, FontAwesomeIcons.walking, FontAwesomeIcons.biking];
 
   int _selectedIndex = 0;
+
+  int _currentTab = 0;
 
   Widget _buildIcon(int index) {
     return GestureDetector(
@@ -46,6 +48,39 @@ class _HomeScreenState extends State<HomeScreen> {
           Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: _icons.asMap().entries.map((MapEntry map) => _buildIcon(map.key)).toList()),
           SizedBox(height: 20.0),
           DestinationCarousel(),
+          SizedBox(height: 20.0),
+          HotelCarousel(),
+        ],
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentTab,
+        onTap: (int value) {
+          setState(() {
+            _currentTab = value;
+          });
+        },
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.search,
+              size: 30.0,
+            ),
+            title: SizedBox.shrink(),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.local_hotel,
+              size: 30.0,
+            ),
+            title: SizedBox.shrink(),
+          ),
+          BottomNavigationBarItem(
+            icon: CircleAvatar(
+              radius: 15.0,
+              backgroundImage: NetworkImage('https://cdn.dribbble.com/users/2137652/avatars/normal/ff93566cd2d04024d7e6a7c1561f1c16.jpg?1558267819'),
+            ),
+            title: SizedBox.shrink(),
+          )
         ],
       ),
     );
